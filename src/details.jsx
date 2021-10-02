@@ -1,21 +1,21 @@
 import React, {Component} from "react";
-class deatls extends Component{
+class Details extends Component{
 
 
   render () {
 
     return(
-    <div class="row">
-      <div class="column">
+    <div className="row">
+      <div className="column">
         <img src="https://placekitten.com/200/300" />
       </div>
-      <div class="details">
-        <div class="name">
+      <div className="details">
+        <div className="name">
           Location:
           <br />
           Offer:
         </div>
-        <div class="button">
+        <div className="button">
           <button>View map</button>
         </div>
       </div>
@@ -23,4 +23,4 @@ class deatls extends Component{
   );
     }
 }
-export default details
+export default Details

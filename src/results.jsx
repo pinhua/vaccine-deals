@@ -1,27 +1,27 @@
 import React, {Component} from "react";
-class results extends Component {
+class Results extends Component {
   render (){
       return (
     <ul>
-      <div class="row">
-        <div class="column">
+      <div className="row">
+        <div className="column">
           <img src="https://placekitten.com/200/300" />
         </div>
-        <div class="details">
-          <div class="name">Restauant 1</div>
-          <div class="button">
+        <div className="details">
+          <div className="name">Restauant 1</div>
+          <div className="button">
             <a href="details.html">View</a>
           </div>
           <div id="button"></div>
         </div>
       </div>
-      <div class="row">
-        <div class="column">
+      <div className="row">
+        <div className="column">
           <img src="https://placekitten.com/200/300" />
         </div>
-        <div class="details">
-          <div class="name">Restauant 2</div>
-          <div class="button">
+        <div className="details">
+          <div className="name">Restauant 2</div>
+          <div className="button">
             <a href="details.html">View</a>
           </div>
           <div id="button"></div>
@@ -31,4 +31,4 @@ class results extends Component {
       );
   }
 }
-export default results;
+export default Results;
