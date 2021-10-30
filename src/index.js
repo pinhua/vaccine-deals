@@ -3,11 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { doc, getFirestore } from 'firebase/firestore';
+import { FirebaseAppProvider, FirestoreProvider, useFirestoreDocData, useFirestore, useFirebaseApp } from 'reactfire';
+const firebaseConfig = {
+  apiKey: "AIzaSyBhUVVJFRB0NRJuv0JF69RWibKEyNNbgtM",
+  authDomain: "vaccine-deals.firebaseapp.com",
+  databaseURL: "https://vaccine-deals-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "vaccine-deals",
+  storageBucket: "vaccine-deals.appspot.com",
+  messagingSenderId: "418231703148",
+  appId: "1:418231703148:web:008309a5c0d3984e3bea49",
+  measurementId: "G-4JDD1FCEJQ"
+};
 ReactDOM.render(
-  <React.StrictMode>
+  <FirebaseAppProvider firebaseConfig={firebaseConfig}>
     <App />
-  </React.StrictMode>,
+  </FirebaseAppProvider>,
   document.getElementById('root')
 );
 
