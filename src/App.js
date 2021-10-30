@@ -6,7 +6,11 @@ import Details from './details';
 import {collection, getFirestore} from 'firebase/firestore';
 import { useFirestoreDocData, useFirestore, useFirebaseApp, FirestoreProvider, useFirestoreCollectionData } from 'reactfire';
 import React, { useState, useEffect } from "react";
-
+import {BrowserRouter as Router,
+Switch,
+Route,
+Link
+} from "react-router-dom";
 
 
 function Restaurant(){
@@ -33,8 +37,11 @@ function Restaurant(){
               <p>Maximum price: {restaurant.maxprice}</p>
               <img src={restaurant.image} />
               <p>Location: {restaurant.location}</p>
+              <a href ={restaurant.map}>Map</a>
+              <Link to={'/details/' + restaurant.NO_ID_FIELD}>View more</Link>
             </div>
          ))
+
         }
       </div>
     );
@@ -47,10 +54,19 @@ function App(){
     <FirestoreProvider sdk={firestoreInstance}>
     <div>
       <h1>Vaccine deals</h1>
-      <Restaurant />
-      <Home />
-      <Results />
-      <Details />
+      <Router>
+      <Switch>
+        <Route path={'/Home'}>
+        <Home />
+        </Route>
+        <Route path={'/results'}>
+          <Restaurant />
+        </Route>
+        <Route path={'/details/:restaurantId'}>
+          <Details />
+        </Route>
+      </Switch>
+      </Router>
     </div>
     </FirestoreProvider>
   );

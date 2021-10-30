@@ -4,7 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { doc, getFirestore } from 'firebase/firestore';
+import {createStore} from 'redux';
 import { FirebaseAppProvider, FirestoreProvider, useFirestoreDocData, useFirestore, useFirebaseApp } from 'reactfire';
+import {Provider} from 'react-redux';
 const firebaseConfig = {
   apiKey: "AIzaSyBhUVVJFRB0NRJuv0JF69RWibKEyNNbgtM",
   authDomain: "vaccine-deals.firebaseapp.com",
@@ -15,10 +17,16 @@ const firebaseConfig = {
   appId: "1:418231703148:web:008309a5c0d3984e3bea49",
   measurementId: "G-4JDD1FCEJQ"
 };
+function storeReducer() {
+
+}
+const store = createStore(storeReducer);
 ReactDOM.render(
+  <Provider store={store}>
   <FirebaseAppProvider firebaseConfig={firebaseConfig}>
     <App />
-  </FirebaseAppProvider>,
+  </FirebaseAppProvider>
+  </Provider>,
   document.getElementById('root')
 );
 
