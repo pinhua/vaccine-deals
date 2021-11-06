@@ -14,7 +14,7 @@ function Details() {
     <div>
       
       
-      <p>Hello</p>
+      
       {
        
          
@@ -28,6 +28,7 @@ function Details() {
             <img src={data.image} />
             <p>Location: {data.location}</p>
             <a href ={data.map}>Map</a>
+            <br />
             <button onClick={() => history.goBack()}>Back</button>
           </div>
        

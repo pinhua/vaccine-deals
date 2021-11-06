@@ -1,10 +1,20 @@
 import React , {Component} from 'react';
- class Home extends Component {
+import {withRouter} from 'react-router-dom';
 
+ class Home extends Component {
+   constructor(props) {
+      super(props)
+      this.submitForm = this.submitForm.bind(this);
+   }
+  submitForm(e) {
+    e.preventDefault();
+    this.props.history.push('/results')
+   
+  }
   render() {
     return(
     <div>
-      <form>
+      <form onSubmit={this.submitForm}>
         <label>Location:</label>    
         <input type="text" id="location" name="location"></input>
         <input type="radio" id="halal" name="halalStatus" value="Halal"></input>
@@ -40,4 +50,4 @@ import React , {Component} from 'react';
   }
 }
 
-export default Home;
+export default withRouter(Home);

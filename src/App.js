@@ -56,16 +56,16 @@ function App(){
       <h1>Vaccine deals</h1>
       <Router>
       <Switch>
-        <Route path={'/Home'}>
-        <Home />
-        </Route>
+      <Route exact path="/" component={Home} />
         <Route path={'/results'}>
           <Restaurant />
         </Route>
         <Route path={'/details/:restaurantId'}>
           <Details />
         </Route>
+        <Route path="*" component={Home} />
       </Switch>
+
       </Router>
     </div>
     </FirestoreProvider>
