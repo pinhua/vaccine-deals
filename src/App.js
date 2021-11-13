@@ -16,6 +16,7 @@ Link
 function Restaurant(){
     const restaurantRef = collection(useFirestore(), 'Restaurant 1');
     const {status,data} = useFirestoreCollectionData(restaurantRef);
+    console.log(this);
 
     if (status === 'loading') {
       return <p>Fetching restaurant...</p>;
@@ -23,8 +24,8 @@ function Restaurant(){
     return (
       <div>
         {data.map((r) => ( console.log(r) )) }
-        
-        <p>Hello</p>
+
+      
         {
          data.map((restaurant) => (
            

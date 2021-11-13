@@ -13,8 +13,6 @@ function Details() {
   return (
     <div>
       
-      
-      
       {
        
          
