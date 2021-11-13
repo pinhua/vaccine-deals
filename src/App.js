@@ -13,10 +13,10 @@ Link
 } from "react-router-dom";
 
 
-function Restaurant(){
+function Restaurant(location){
     const restaurantRef = collection(useFirestore(), 'Restaurant 1');
     const {status,data} = useFirestoreCollectionData(restaurantRef);
-    console.log(this);
+    console.log(location);
 
     if (status === 'loading') {
       return <p>Fetching restaurant...</p>;
