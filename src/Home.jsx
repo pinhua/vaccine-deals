@@ -5,7 +5,7 @@ import {withRouter} from 'react-router-dom';
    constructor(props) {
       super(props)
       this.submitForm = this.submitForm.bind(this);
-      this.state={location: '', halal: 'Halal', shop: '', price: 0};
+      this.state={location: '', halal: true , shop: 'restaurant', price: ''};
       this.handleInputChange = this.handleInputChange.bind(this);
    }
    handleInputChange(event){
@@ -56,9 +56,9 @@ import {withRouter} from 'react-router-dom';
           type="range"
           id="price"
           name="price"
-          min="0"
+          min="5"
           max="1000"
-          step="10"
+          step="5"
           value={this.state.price} 
           onChange={this.handleInputChange}
         ></input>
