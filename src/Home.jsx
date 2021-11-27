@@ -1,6 +1,6 @@
 import React , {Component, useState} from 'react';
 import {withRouter} from 'react-router-dom';
-
+import Select from 'react-select';
  class Home extends Component {
    constructor(props) {
       super(props)
@@ -28,14 +28,30 @@ import {withRouter} from 'react-router-dom';
        price: this.state.price
       }
     })
-   
+    
   }
+
   render() {
+    const options = [
+      {value: 'restaurant', label: 'Restaurant'},
+      {value: 'foodcourt', label: 'Food Court'},
+      {value: 'fastfood', label: 'Fast Food'}
+    ]
+
     return(
+    
     <div>
       <form onSubmit={this.submitForm}>
         <label>Location:</label>    
-        <input type="text" id="location" name="location" value={this.state.location} onChange={this.handleInputChange}></input>
+        <input list='locations' id="location" name="location" value={this.state.location} onChange={this.handleInputChange} />
+          <datalist id='locations'>
+            <option value='location 1'>location 1</option>
+            <option value='location 2'>location 2</option>
+            <option value='location 3'>location 3</option>
+            <option value='location 4'>location 4</option>
+          </datalist>
+       
+
         <label>
           Halal
         <input
@@ -44,12 +60,7 @@ import {withRouter} from 'react-router-dom';
             checked={this.state.halal}
             onChange={this.handleInputChange} />
         </label>
-        <br />
-        <select name="shop" id="shop" onChange={this.handleInputChange} value={this.state.shop}>
-          <option value="fastfood">Fast Food</option>
-          <option value="restaurant">Restaurant</option>
-          <option value="foodcourt">Food Court</option>
-        </select>
+        <Select isMulti options={options} />
         <br />
         <label htmlFor="price">Price Range</label>
         <input
@@ -62,6 +73,7 @@ import {withRouter} from 'react-router-dom';
           value={this.state.price} 
           onChange={this.handleInputChange}
         ></input>
+        <label htmlFor='price'>{this.state.price}</label>
         <input type="submit" />
       </form>
     </div>

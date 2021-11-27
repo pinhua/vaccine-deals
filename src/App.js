@@ -1,16 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
 import Home from "./Home";
-import Results from "./results";
 import Details from './details';
 import {collection, getFirestore} from 'firebase/firestore';
-import { useFirestoreDocData, useFirestore, useFirebaseApp, FirestoreProvider, useFirestoreCollectionData } from 'reactfire';
-import React, { useState, useEffect } from "react";
+import { useFirestore, useFirebaseApp, FirestoreProvider, useFirestoreCollectionData } from 'reactfire';
+import React, {  } from "react";
 import {BrowserRouter as Router,
 Switch,
 Route,
 Link,
-useParams,
 useHistory
 } from "react-router-dom";
 
@@ -34,7 +31,7 @@ function Restaurant(){
          data.map((restaurant) => {
            let restaurantDiv;
 
-            if (halalParam == restaurant.halal && shopParam == restaurant.type && priceParam >= restaurant.minprice && priceParam <= restaurant.maxprice){
+            if (halalParam == restaurant.halal && shopParam == restaurant.type && (priceParam >= restaurant.minprice && priceParam <= restaurant.maxprice)){
               restaurantDiv = (<div key = {restaurant.name}>
                 
                 <p>Name: {restaurant.name}</p>
