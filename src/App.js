@@ -10,16 +10,33 @@ Route,
 Link,
 useHistory
 } from "react-router-dom";
-
+function validMatch(restaurantTypes, shopOptions){
+  var optionsArray = []
+  for (var i in shopOptions){
+    optionsArray.push(shopOptions[i].value)
+  }
+  for(var j in restaurantTypes){
+    console.log("the value of j is "+restaurantTypes[j])
+    console.log("and we are finding it in " + optionsArray);
+    if(optionsArray.includes(restaurantTypes[j])){
+      console.log("we found a match");
+      console.log(restaurantTypes[j]);
+      
+      return true;
+    }
+    
+  }
+  return false;
+}
 
 function Restaurant(){
     const restaurantRef = collection(useFirestore(), 'Restaurant 1');
     const {status,data} = useFirestoreCollectionData(restaurantRef);
     let searchParams  = useHistory();
-    console.log(searchParams.location);
+    
     let locationParam = searchParams.location.state.location;
-    let halalParam = searchParams.location.state.halal;
-    let shopParam = searchParams.location.state.shop;
+    
+    let shopOptions = searchParams.location.state.shopOptions;
     let priceParam = parseInt(searchParams.location.state.price);
     if (status === 'loading') {
       return <p>Fetching restaurant...</p>;
@@ -30,8 +47,10 @@ function Restaurant(){
         {
          data.map((restaurant) => {
            let restaurantDiv;
-
-            if (halalParam == restaurant.halal && shopParam == restaurant.type && (priceParam >= restaurant.minprice && priceParam <= restaurant.maxprice)){
+           console.log(restaurant.type);
+           console.log(shopOptions);
+            if (validMatch(restaurant.type, shopOptions) && (priceParam >= restaurant.minprice && priceParam <= restaurant.maxprice)) {
+              console.log("This was a valid match");
               restaurantDiv = (<div key = {restaurant.name}>
                 
                 <p>Name: {restaurant.name}</p>

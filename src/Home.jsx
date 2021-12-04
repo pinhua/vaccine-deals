@@ -1,14 +1,22 @@
+import { connectStorageEmulator } from '@firebase/storage';
 import React , {Component, useState} from 'react';
 import {withRouter} from 'react-router-dom';
 import Select from 'react-select';
  class Home extends Component {
+
    constructor(props) {
       super(props)
       this.submitForm = this.submitForm.bind(this);
-      this.state={location: '', halal: true , shop: 'restaurant', price: ''};
+      this.state={location: '', shop: 'restaurant', price: '', selectedOptions: []};
       this.handleInputChange = this.handleInputChange.bind(this);
    }
+   handleChange = (selectedOptions) => {
+    this.setState({ selectedOptions });
+    console.log(selectedOptions);
+    console.log(this.state);
+  }
    handleInputChange(event){
+     
      const target = event.target;
      const value = target.type === 'checkbox' ? target.checked : target.value;
      const name = target.name;
@@ -23,8 +31,8 @@ import Select from 'react-select';
       pathname: '/results',
       state: {
        location: this.state.location,
-       halal: this.state.halal,
-       shop: this.state.shop,
+       
+       shopOptions: this.state.selectedOptions,
        price: this.state.price
       }
     })
@@ -32,10 +40,12 @@ import Select from 'react-select';
   }
 
   render() {
+    const {selectedOptions} = this.state;
     const options = [
       {value: 'restaurant', label: 'Restaurant'},
       {value: 'foodcourt', label: 'Food Court'},
-      {value: 'fastfood', label: 'Fast Food'}
+      {value: 'fastfood', label: 'Fast Food'},
+      {value: 'halal', label: 'Halal'}
     ]
 
     return(
@@ -52,15 +62,9 @@ import Select from 'react-select';
           </datalist>
        
 
-        <label>
-          Halal
-        <input
-            name="halal"
-            type="checkbox"
-            checked={this.state.halal}
-            onChange={this.handleInputChange} />
-        </label>
-        <Select isMulti options={options} />
+        
+        <Select isMulti isClearable options={options} 
+          onChange={this.handleChange} />
         <br />
         <label htmlFor="price">Price Range</label>
         <input
