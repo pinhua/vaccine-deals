@@ -7,16 +7,21 @@ import Select from 'react-select';
    constructor(props) {
       super(props)
       this.submitForm = this.submitForm.bind(this);
-      this.state={location: '', shop: 'restaurant', price: '', selectedOptions: []};
+      this.state={location: '', shop: 'restaurant', price: '', selectedShopOptions: [], selectedLocationOptions: []};
+      this.handleLocationChange = this.handleLocationChange.bind(this);
+      this.handleShopChange = this.handleShopChange.bind(this);
       this.handleInputChange = this.handleInputChange.bind(this);
+
    }
-   handleChange = (selectedOptions) => {
-    this.setState({ selectedOptions });
-    console.log(selectedOptions);
-    console.log(this.state);
+   handleShopChange(selectedShopOptions) {
+    this.setState({ selectedShopOptions });
   }
-   handleInputChange(event){
-     
+
+  handleLocationChange(selectedLocationOptions) {
+    this.setState({ selectedLocationOptions });
+  }
+
+  handleInputChange(event){
      const target = event.target;
      const value = target.type === 'checkbox' ? target.checked : target.value;
      const name = target.name;
@@ -30,9 +35,8 @@ import Select from 'react-select';
     this.props.history.push({
       pathname: '/results',
       state: {
-       location: this.state.location,
-       
-       shopOptions: this.state.selectedOptions,
+       locationOptions: this.state.selectedLocationOptions,
+       shopOptions: this.state.selectedShopOptions,
        price: this.state.price
       }
     })
@@ -41,30 +45,28 @@ import Select from 'react-select';
 
   render() {
     const {selectedOptions} = this.state;
-    const options = [
+    const shopOptions = [
       {value: 'restaurant', label: 'Restaurant'},
       {value: 'foodcourt', label: 'Food Court'},
       {value: 'fastfood', label: 'Fast Food'},
       {value: 'halal', label: 'Halal'}
     ]
-
+    const locationOptions = [
+      {value: 'location1', label: 'Location 1'},
+      {value: 'location2', label: 'Location 2'},
+      {value: 'location3', label: 'Location 3'},
+      {value: 'location4', label: 'Location 4'}
+    ]
     return(
     
     <div>
       <form onSubmit={this.submitForm}>
         <label>Location:</label>    
-        <input list='locations' id="location" name="location" value={this.state.location} onChange={this.handleInputChange} />
-          <datalist id='locations'>
-            <option value='location 1'>location 1</option>
-            <option value='location 2'>location 2</option>
-            <option value='location 3'>location 3</option>
-            <option value='location 4'>location 4</option>
-          </datalist>
+        <Select isMulti isClearable isSearchable onChange={this.handleLocationChange} options={locationOptions}  />
        
 
-        
-        <Select isMulti isClearable options={options} 
-          onChange={this.handleChange} />
+        <label>Shop type:</label>
+        <Select isMulti isClearable isSearchable onChange={this.handleShopChange}  options={shopOptions} />
         <br />
         <label htmlFor="price">Price Range</label>
         <input
