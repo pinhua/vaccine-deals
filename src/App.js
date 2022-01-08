@@ -13,7 +13,7 @@ useHistory
 function validMatch(restaurantProperties, userSelections){
   var optionsArray = []
   console.log(userSelections);
-  if(userSelections == undefined || userSelections.length < 1){
+  if(userSelections === undefined || userSelections.length < 1){
     return true;
   }
   if(Array.isArray(restaurantProperties)){
@@ -51,7 +51,8 @@ function Restaurant(){
     let searchParams  = useHistory();
     let locationOptions = searchParams.location.state.locationOptions;
     let shopOptions = searchParams.location.state.shopOptions;
-    let priceParam = parseInt(searchParams.location.state.price);
+    let minPrice = parseInt(searchParams.location.state.minPrice)
+    let maxPrice = parseInt(searchParams.location.state.maxPrice)
     if (status === 'loading') {
       return <p>Fetching restaurant...</p>;
     }
@@ -61,18 +62,15 @@ function Restaurant(){
         {
          data.map((restaurant) => {
            let restaurantDiv;
-           console.log(restaurant.location);
-           console.log(restaurant.type);
-           console.log(shopOptions);
-           console.log(locationOptions);
-            if (validMatch(restaurant.type, shopOptions) && validMatch(restaurant.location, locationOptions) && (priceParam >= restaurant.minprice && priceParam <= restaurant.maxprice)) {
+           console.log(searchParams.location.state)
+            if (validMatch(restaurant.type, shopOptions) && validMatch(restaurant.location, locationOptions) && (minPrice<= restaurant.minprice && maxPrice >= restaurant.maxprice)) {
               
               restaurantDiv = (<div key = {restaurant.name}>
                 
                 <p>Name: {restaurant.name}</p>
-                <p>Type: {restaurant.type}</p>
+                <p>Type: {restaurant.type.join(', ')}</p>
                 <p>Offer: {restaurant.offer}</p>
-                <p>Halal: {restaurant.halal ? 'yes':'no'}</p>
+                
                 <p>Minimum price: {restaurant.minprice}</p>
                 <p>Maximum price: {restaurant.maxprice}</p>
                 <img src={restaurant.image} />
@@ -80,14 +78,23 @@ function Restaurant(){
                 <a href ={restaurant.map}>Map</a>
                 <  Link to={'/details/' + restaurant.NO_ID_FIELD}>View more</Link>
                 </div>)
-            } /*else {
+            }/* else {
               restaurantDiv = (
               <div key={restaurant.name}>
                 <p> Name {restaurant.name}</p>
-                <p>Halal: {halalParam == restaurant.halal ? 'yes' : 'no'}</p> 
-                <p>Type: {shopParam == restaurant.type ? 'yes' : 'no'}</p>
-                <p>price: {(priceParam >= restaurant.minprice && priceParam <= restaurant.maxprice) ? 'yes' : 'no'}</p>
+                <p>Shop Options: {validMatch(restaurant.type, shopOptions) ? 'yes' : 'no'}</p> 
+                <p>Location Options: {validMatch(restaurant.location, locationOptions) ? 'yes': 'no'}</p>
+                <br />
+                <p>Minimum price: {restaurant.minprice}</p>
+                <p>Maximum price: {restaurant.maxprice}</p>
+                <br />
+                <p>Minimum price selection: {minPrice}</p>
+                <p>Maximum price selection: {maxPrice}</p>
+                <br />
+                <p>price: {(minPrice <= restaurant.minprice && maxPrice >= restaurant.maxprice) ? 'yes' : 'no'}</p>
+                <br />
               </div>
+              
               )
             }*/
 
@@ -99,6 +106,32 @@ function Restaurant(){
           
       </div>
     );
+}
+function Results(){
+  let history = useHistory();
+  let locationOptions = history.location.state.locationOptions;
+  let shopOptions = history.location.state.shopOptions;
+  let minPrice = parseInt(history.location.state.minPrice)
+  let maxPrice = parseInt(history.location.state.maxPrice)
+  var locationsArray = []
+  var shopArray=[]
+  for (var i in locationOptions){
+    locationsArray.push(locationOptions[i].value)
+  }
+  for (var j in shopOptions){
+    shopArray.push(shopOptions[j].value)
+  }
+  return(
+    <div>
+       <h2>Results</h2>
+       <p className='resultHeader'>You've searched for restaurants at {locationsArray.length>=1 ? locationsArray.join(', '): 'all areas'} with  {shopArray.length>=1 ? 'options of '+ shopArray.join(', '): 'no options selected'} and price range of ${minPrice} to ${maxPrice}.</p><br />
+       <button onClick={() => history.goBack()}>New Search</button>
+          <br />Here are your results:
+          
+
+          <Restaurant />
+    </div>
+  )
 }
 function App(){
 
@@ -112,7 +145,8 @@ function App(){
       <Switch>
       <Route exact path="/" component={Home} />
         <Route path={'/results'}>
-          <Restaurant />
+          <Results />
+          
         </Route>
         <Route path={'/details/:restaurantId'}>
           <Details />
