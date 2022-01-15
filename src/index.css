@@ -14,3 +14,18 @@ code {
 .resultHeader{
   font-size: x-large;
 }
+.entry{
+  display: flex;
+  
+  padding: 1em;
+  flex-direction: row;
+}
+body{
+  padding: 1em
+}
+.details{
+  display: flex;
+  padding:1em;
+  
+  flex-direction: column;
+}

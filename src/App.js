@@ -65,18 +65,19 @@ function Restaurant(){
            console.log(searchParams.location.state)
             if (validMatch(restaurant.type, shopOptions) && validMatch(restaurant.location, locationOptions) && (minPrice<= restaurant.minprice && maxPrice >= restaurant.maxprice)) {
               
-              restaurantDiv = (<div key = {restaurant.name}>
-                
+              restaurantDiv = (<div key = {restaurant.name} className='entry'>
+                <img src={restaurant.image} />
+                <div className='details'>
                 <p>Name: {restaurant.name}</p>
                 <p>Type: {restaurant.type.join(', ')}</p>
                 <p>Offer: {restaurant.offer}</p>
+                <p>${restaurant.minprice}-${restaurant.maxprice}</p>
                 
-                <p>Minimum price: {restaurant.minprice}</p>
-                <p>Maximum price: {restaurant.maxprice}</p>
-                <img src={restaurant.image} />
+                
                 <p>Location: {restaurant.location}</p>
                 <a href ={restaurant.map}>Map</a>
                 <  Link to={'/details/' + restaurant.NO_ID_FIELD}>View more</Link>
+                </div>
                 </div>)
             }/* else {
               restaurantDiv = (
@@ -126,7 +127,7 @@ function Results(){
        <h2>Results</h2>
        <p className='resultHeader'>You've searched for restaurants at {locationsArray.length>=1 ? locationsArray.join(', '): 'all areas'} with  {shopArray.length>=1 ? 'options of '+ shopArray.join(', '): 'no options selected'} and price range of ${minPrice} to ${maxPrice}.</p><br />
        <button onClick={() => history.goBack()}>New Search</button>
-          <br />Here are your results:
+          <br /><h2>Here are your results:</h2>
           
 
           <Restaurant />
